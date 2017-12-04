@@ -28,7 +28,7 @@ public class test {
             String[] strings = new String[]{"345345","345345.666","546","7567567","dfgdfg","7899","rer","45656"};
 //            System.out.println(bubbleSort.sort(doubles, OrderEnum.asc)+"      IBubbleSort");
 //            System.out.println(quick.sort(doubles,OrderEnum.asc));
-            System.out.println(heap.sort(doubles));
+            System.out.println(heap.sortByAsc(doubles));
         } catch (Throwable throwable) {
             throwable.printStackTrace();
             System.exit(1);
