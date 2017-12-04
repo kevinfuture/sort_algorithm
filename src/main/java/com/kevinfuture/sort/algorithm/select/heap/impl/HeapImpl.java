@@ -22,16 +22,23 @@ public class HeapImpl extends AbstractHeap{
      * **/
     @Override
     public List sortByAsc(double[] doubles) throws Throwable {
-        //一、初始化整个数组为一个完整树
-        buildTree(doubles,0,doubles.length);
-        System.out.println("first:  "+ DoubleStream.of(doubles).boxed().collect(Collectors.toList()));
+        //一、初始化整个数组为一个完整树；保证长度的一半即可完全遍历整个数组长度
+        /**
+         * 此处产生了问题，出现了子节点 > 父节点的情况
+         * 分析可知 如果只进行一次parent=0的初始化树，则只保证了首树，后续的树没有再次进行数据变脸，因为parentVal是确定的
+         * 为避免出现此种情况 二分之一倒叙遍历，保证了最小树的初始化
+         * **/
+        for(int i = doubles.length / 2; i >= 0  ; i--) {
+            buildTree(doubles, i, doubles.length);
+            System.out.println("first:  "+ DoubleStream.of(doubles).boxed().collect(Collectors.toList()));
+        }
         //二、一步骤已完成一次堆的初始化，再次遍历排序不需要对这一次进行操作了，故为n-1次的复杂度操作
         for(int i = doubles.length - 1; i > 0 ; i--){
             //堆顶堆尾交换
             swap(doubles,i,0);
             //n-1堆再调整初始化
             buildTree(doubles,0,i);
-            System.out.println(i+" :  "+ DoubleStream.of(doubles).boxed().collect(Collectors.toList()));
+//            System.out.println(i+" :  "+ DoubleStream.of(doubles).boxed().collect(Collectors.toList()));
         }
         List list = DoubleStream.of(doubles).boxed().collect(Collectors.toList());
         return list;
@@ -40,7 +47,7 @@ public class HeapImpl extends AbstractHeap{
      * 初始化堆（构建二叉树的堆）
      * 要点：
      * 1）：保证父节点要 > 左右子节点（不满足则交换）
-     * 2）：保证左子节点 > 右子节点（不满足则交换）
+     * 2）：保证左子节点 > 右子节点（不满足则交换）? 原因：眼下代码只能保证父节点 > 子节点，没有对于左右子节点进行置换操作
      * 3）：父节点位置（下标序号）<= 总排序长度的二分之一(PS：左右子节点=父节点*2 + 1或2；遍历前二分之一的父节点也就完成了全部的堆的初始化)
      * @param doubles
      * @param parent 父节点下标序号
