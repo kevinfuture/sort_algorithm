@@ -7,6 +7,8 @@ import com.kevinfuture.sort.algorithm.insert.direct.IInsertDirect;
 import com.kevinfuture.sort.algorithm.insert.direct.impl.InsertDirectImpl;
 import com.kevinfuture.sort.algorithm.insert.shell.IShell;
 import com.kevinfuture.sort.algorithm.insert.shell.impl.ShellImpl;
+import com.kevinfuture.sort.algorithm.merge.IMerge;
+import com.kevinfuture.sort.algorithm.merge.impl.MergeImpl;
 import com.kevinfuture.sort.algorithm.select.direct.IDirect;
 import com.kevinfuture.sort.algorithm.select.direct.impl.DirectImpl;
 import com.kevinfuture.sort.algorithm.select.heap.IHeap;
@@ -24,6 +26,7 @@ public class test {
         IHeap heap = new HeapImpl();
         IInsertDirect insertDirect = new InsertDirectImpl();
         IShell shell = new ShellImpl();
+        IMerge merge = new MergeImpl();
         try {
             int[] ints = new int[]{1,2,2,3,-1,2,-8,9,45,22,1,23};
             Integer[] integers = new Integer[]{9,54,23,78,123,4546,33};
@@ -34,7 +37,7 @@ public class test {
             String[] strings = new String[]{"345345","345345.666","546","7567567","dfgdfg","7899","rer","45656"};
 //            System.out.println(bubbleSort.sort(doubles, OrderEnum.asc)+"      IBubbleSort");
 //            System.out.println(quick.sort(doubles,OrderEnum.asc));
-            System.out.println(shell.sort(doubles,null));
+            System.out.println(merge.sortByAsc(doubles));
         } catch (Throwable throwable) {
             throwable.printStackTrace();
             System.exit(1);
